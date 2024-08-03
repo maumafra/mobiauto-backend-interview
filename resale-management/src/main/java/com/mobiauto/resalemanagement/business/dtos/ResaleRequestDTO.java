@@ -1,4 +1,4 @@
-package com.mobiauto.resalemanagement.dtos;
+package com.mobiauto.resalemanagement.business.dtos;
 
 import com.mobiauto.resalemanagement.utils.constants.Constants;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;

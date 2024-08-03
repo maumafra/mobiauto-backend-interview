@@ -1,4 +1,4 @@
-package com.mobiauto.resalemanagement.domains;
+package com.mobiauto.resalemanagement.business.domains;
 
 import com.mobiauto.resalemanagement.utils.validators.CNPJValidator;
 import jakarta.persistence.Column;

@@ -1,9 +1,9 @@
-package com.mobiauto.resalemanagement.mappers;
+package com.mobiauto.resalemanagement.business.mappers;
 
-import com.mobiauto.resalemanagement.domains.Cnpj;
-import com.mobiauto.resalemanagement.dtos.ResaleResponseDTO;
+import com.mobiauto.resalemanagement.business.domains.Cnpj;
+import com.mobiauto.resalemanagement.business.dtos.ResaleResponseDTO;
 import com.mobiauto.resalemanagement.entities.Resale;
-import com.mobiauto.resalemanagement.dtos.ResaleRequestDTO;
+import com.mobiauto.resalemanagement.business.dtos.ResaleRequestDTO;
 import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -19,10 +19,10 @@ public class ResaleMapper {
     }
 
     public ResaleResponseDTO map(final Resale resale) {
-        return new ResaleResponseDTO(
-                resale.getId(),
-                resale.getSocialName(),
-                resale.getCnpj().value()
-        );
+        return ResaleResponseDTO.builder()
+                .resaleId(resale.getId())
+                .socialName(resale.getSocialName())
+                .cnpj(resale.getCnpj().value())
+                .build();
     }
 }
