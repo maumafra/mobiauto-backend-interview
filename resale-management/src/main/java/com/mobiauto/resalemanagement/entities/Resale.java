@@ -1,6 +1,6 @@
 package com.mobiauto.resalemanagement.entities;
 
-import com.mobiauto.resalemanagement.domain.Cnpj;
+import com.mobiauto.resalemanagement.domains.Cnpj;
 import jakarta.persistence.AttributeOverride;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
