@@ -1,5 +1,6 @@
-package com.mobiauto.resalemanagement;
+package com.mobiauto.resalemanagement.entities;
 
+import com.mobiauto.resalemanagement.domain.Cnpj;
 import jakarta.persistence.AttributeOverride;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -21,21 +22,30 @@ import lombok.NoArgsConstructor;
 @Entity
 public class Resale {
 
+    private static final String RESALE_ID_SEQUENCE = "resale_id_sequence";
+
     @Id
+    @Column(name = "id")
     @SequenceGenerator(
-            name = "resale_id_sequence",
-            sequenceName = "resale_id_sequence"
+            name = RESALE_ID_SEQUENCE,
+            sequenceName = RESALE_ID_SEQUENCE
     )
     @GeneratedValue(
             strategy = GenerationType.SEQUENCE,
-            generator = "resale_id_sequence"
+            generator = RESALE_ID_SEQUENCE
     )
     private Integer id;
+
+    @Column(name = "social_name")
     private String socialName;
+
     @Embedded
     @AttributeOverride(
             name = "value",
-            column = @Column(name = "cnpj")
+            column = @Column(
+                    name = "cnpj",
+                    unique = true
+            )
     )
     private Cnpj cnpj;
 }

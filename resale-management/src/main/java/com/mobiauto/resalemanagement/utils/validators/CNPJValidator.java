@@ -1,4 +1,4 @@
-package com.mobiauto.resalemanagement;
+package com.mobiauto.resalemanagement.utils.validators;
 
 import java.io.Serializable;
 
