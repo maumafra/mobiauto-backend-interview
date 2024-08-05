@@ -5,7 +5,7 @@ import com.mobiauto.resalemanagement.business.dtos.ResaleResponseDTO;
 import com.mobiauto.resalemanagement.entities.Resale;
 import com.mobiauto.resalemanagement.repositories.ResaleRepository;
 import com.mobiauto.resalemanagement.business.mappers.ResaleMapper;
-import com.mobiauto.resalemanagement.utils.constants.Constants;
+import com.mobiauto.resalemanagement.utils.Constants;
 import com.mobiauto.resalemanagement.utils.exceptions.ResaleNotFoundException;
 import com.mobiauto.resalemanagement.utils.hateoas.ResaleResponseHypermediaAssembler;
 import lombok.AllArgsConstructor;

@@ -1,12 +1,12 @@
 server:
-  port: 8080
+  port: 8081
 
 spring:
   application:
-    name: resale-management
+    name: opportunity-management
   datasource:
     username: 'admin'
-    url: jdbc:postgresql://localhost:5432/resale-management
+    url: jdbc:postgresql://localhost:5432/opportunity-management
     password: 'password'
   jpa:
     hibernate:

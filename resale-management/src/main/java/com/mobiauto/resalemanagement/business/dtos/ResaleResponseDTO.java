@@ -2,11 +2,13 @@ package com.mobiauto.resalemanagement.business.dtos;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import com.mobiauto.resalemanagement.utils.constants.Constants;
+import com.mobiauto.resalemanagement.utils.Constants;
 import lombok.Builder;
+import lombok.Getter;
 import org.springframework.hateoas.RepresentationModel;
 
 @Builder
+@Getter
 @JsonPropertyOrder({
         Constants.ID,
         Constants.SOCIAL_NAME,
@@ -19,8 +21,4 @@ public class ResaleResponseDTO extends RepresentationModel<ResaleResponseDTO> {
         private String socialName;
         @JsonProperty(Constants.CNPJ)
         private String cnpj;
-
-        public Integer getResaleId() {
-                return this.resaleId;
-        }
 }
