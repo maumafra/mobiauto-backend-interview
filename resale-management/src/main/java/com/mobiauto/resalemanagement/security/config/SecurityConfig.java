@@ -29,9 +29,7 @@ public class SecurityConfig {
                 .csrf()
                 .disable()
                 .authorizeHttpRequests()
-                .requestMatchers("/api/v1/system-security/auth/authenticate")
-                .permitAll()
-                .requestMatchers("/api/v1/system-security/**")
+                .requestMatchers("/api/v1/resale-management/**")
                 .hasAnyAuthority(
                         Role.ADMINISTRATOR.name(),
                         Role.MANAGER.name(),

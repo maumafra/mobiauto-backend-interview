@@ -1,5 +1,6 @@
 package com.mobiauto.systemsecurity.config;
 
+import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -11,7 +12,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
-@RequiredArgsConstructor
+@NoArgsConstructor
 public class ApplicationConfig {
     @Autowired
     private ConfigurationService configurationService;

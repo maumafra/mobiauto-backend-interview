@@ -25,8 +25,6 @@ public class ConfigurationService {
     private UserRepository repository;
     @Autowired
     private UserRepository userRepository;
-    @Autowired
-    private PasswordEncoder passwordEncoder;
 
     public UserDetailsService userDetailsService() {
         return username -> repository.findByUsername(username)
@@ -55,7 +53,7 @@ public class ConfigurationService {
                             .username("admin")
                             .fullName("admin")
                             .email(Constants.STARTUP_USER_EMAIL)
-                            .password(passwordEncoder.encode(Constants.STARTUP_USER_PASSWORD))
+                            .password(passwordEncoder().encode(Constants.STARTUP_USER_PASSWORD))
                             .role(Role.ADMINISTRATOR)
                             .build();
                     userRepository.saveAndFlush(user);
