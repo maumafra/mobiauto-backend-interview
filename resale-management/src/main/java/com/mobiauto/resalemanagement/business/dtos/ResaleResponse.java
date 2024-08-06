@@ -14,7 +14,7 @@ import org.springframework.hateoas.RepresentationModel;
         Constants.SOCIAL_NAME,
         Constants.CNPJ
 })
-public class ResaleResponseDTO extends RepresentationModel<ResaleResponseDTO> {
+public class ResaleResponse extends RepresentationModel<ResaleResponse> {
         @JsonProperty(Constants.ID)
         private Integer resaleId;
         @JsonProperty(Constants.SOCIAL_NAME)

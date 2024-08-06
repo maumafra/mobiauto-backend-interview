@@ -1,7 +1,7 @@
 package com.mobiauto.resalemanagement.controllers;
 
 import com.mobiauto.resalemanagement.business.services.ResaleManagementService;
-import com.mobiauto.resalemanagement.business.dtos.ResaleRequestDTO;
+import com.mobiauto.resalemanagement.business.dtos.ResaleRequest;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,8 +44,8 @@ public class ResaleManagementController {
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE
     )
-    public ResponseEntity<?> registerResale(final @RequestBody @Valid ResaleRequestDTO resaleRequestDTO) {
-        return resaleManagementService.registerResale(resaleRequestDTO);
+    public ResponseEntity<?> registerResale(final @RequestBody @Valid ResaleRequest resaleRequest) {
+        return resaleManagementService.registerResale(resaleRequest);
     }
 
     @DeleteMapping(path = "/delete-resale/{resaleId}")

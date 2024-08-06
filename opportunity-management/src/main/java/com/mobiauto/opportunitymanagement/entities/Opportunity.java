@@ -62,6 +62,9 @@ public class Opportunity {
     })
     private OpportunityVehicle vehicle;
 
+    @Column(name = "resale_id")
+    private Integer resaleId;
+
     @AttributeOverride(name = "reasonForConclusion", column = @Column(name = "reason_for_conclusion"))
     private String reasonForConclusion;
 }

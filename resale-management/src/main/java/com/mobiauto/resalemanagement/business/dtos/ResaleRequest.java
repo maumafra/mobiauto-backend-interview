@@ -7,7 +7,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public record ResaleRequestDTO(
+public record ResaleRequest(
 
         @JsonProperty(Constants.SOCIAL_NAME)
         @NotBlank(message = "socialName cannot be null/blank.")

@@ -1,7 +1,7 @@
 package com.mobiauto.resalemanagement.business.services;
 
-import com.mobiauto.resalemanagement.business.dtos.ResaleRequestDTO;
-import com.mobiauto.resalemanagement.business.dtos.ResaleResponseDTO;
+import com.mobiauto.resalemanagement.business.dtos.ResaleRequest;
+import com.mobiauto.resalemanagement.business.dtos.ResaleResponse;
 import com.mobiauto.resalemanagement.entities.Resale;
 import com.mobiauto.resalemanagement.repositories.ResaleRepository;
 import com.mobiauto.resalemanagement.business.mappers.ResaleMapper;
@@ -25,15 +25,15 @@ public class ResaleManagementService {
     @Autowired
     private final ResaleRepository resaleRepository;
 
-    public ResponseEntity<?> registerResale(ResaleRequestDTO resaleRequestDTO) {
+    public ResponseEntity<?> registerResale(ResaleRequest resaleRequest) {
         try {
-            Resale resale = resaleMapper.map(resaleRequestDTO);
+            Resale resale = resaleMapper.map(resaleRequest);
             resaleRepository.saveAndFlush(resale);
-            ResaleResponseDTO resaleResponseDTO = resaleMapper.map(resale);
-            ResaleResponseHypermediaAssembler.addLinks(resaleResponseDTO);
+            ResaleResponse resaleResponse = resaleMapper.map(resale);
+            ResaleResponseHypermediaAssembler.addLinks(resaleResponse);
             return ResponseEntity
                     .status(HttpStatus.CREATED)
-                    .body(resaleResponseDTO);
+                    .body(resaleResponse);
         } catch (IllegalArgumentException ex) {
             return ResponseEntity
                     .status(HttpStatus.BAD_REQUEST)
@@ -53,7 +53,7 @@ public class ResaleManagementService {
         try {
             Resale resale = resaleRepository.findById(resaleId)
                     .orElseThrow(() -> new ResaleNotFoundException(resaleId));
-            ResaleResponseDTO resaleDTO = resaleMapper.map(resale);
+            ResaleResponse resaleDTO = resaleMapper.map(resale);
             ResaleResponseHypermediaAssembler.addLinks(resaleDTO);
             return ResponseEntity
                     .status(HttpStatus.OK)
@@ -71,7 +71,7 @@ public class ResaleManagementService {
 
     public ResponseEntity<?> getAllResales() {
         try {
-            List<ResaleResponseDTO> allResales = resaleRepository.findAll()
+            List<ResaleResponse> allResales = resaleRepository.findAll()
                     .stream()
                     .map(resaleMapper::map)
                     .toList();
