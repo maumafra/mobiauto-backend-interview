@@ -3,6 +3,8 @@ package com.mobiauto.opportunitymanagement.utils.hateoas;
 import com.mobiauto.opportunitymanagement.business.dtos.OpportunityResponseDTO;
 import com.mobiauto.opportunitymanagement.controllers.OpportunityManagementController;
 
+import java.util.List;
+
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
@@ -15,5 +17,12 @@ public class OpportunityResponseHypermediaAssembler {
                                 .getOpportunity(opportunityResponseDTO.getOpportunityId())
                 ).withSelfRel()
         );
+    }
+
+    public static void addLinks(List<OpportunityResponseDTO> opportunityResponseDTOList) {
+        opportunityResponseDTOList
+                .forEach(
+                        OpportunityResponseHypermediaAssembler::addLinks
+                );
     }
 }
