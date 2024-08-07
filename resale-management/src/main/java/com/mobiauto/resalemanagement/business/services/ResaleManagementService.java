@@ -44,7 +44,7 @@ public class ResaleManagementService {
                     .body(Constants.UNIQUE_CNPJ_ERROR);
         } catch (Exception ex) {
             return ResponseEntity
-                    .internalServerError()
+                    .status(HttpStatus.BAD_REQUEST)
                     .build();
         }
     }
@@ -64,7 +64,7 @@ public class ResaleManagementService {
                   .body(ex.getMessage());
         } catch (Exception ex) {
             return ResponseEntity
-                    .internalServerError()
+                    .status(HttpStatus.BAD_REQUEST)
                     .build();
         }
     }
@@ -81,7 +81,7 @@ public class ResaleManagementService {
                     .body(allResales);
         } catch (Exception ex) {
             return ResponseEntity
-                    .internalServerError()
+                    .status(HttpStatus.BAD_REQUEST)
                     .build();
         }
     }
@@ -100,7 +100,7 @@ public class ResaleManagementService {
                     .body(ex.getMessage());
         } catch (Exception ex) {
             return ResponseEntity
-                    .internalServerError()
+                    .status(HttpStatus.BAD_REQUEST)
                     .build();
         }
     }

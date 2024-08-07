@@ -13,10 +13,18 @@ import com.mobiauto.systemsecurity.utils.exceptions.UserNotFoundException;
 import com.mobiauto.systemsecurity.utils.helper.ContextHelper;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
+
+import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 @AllArgsConstructor
@@ -35,6 +43,25 @@ public class UserService {
         try {
             User user = userRepository.findById(userId)
                     .orElseThrow(() -> new UserNotFoundException(userId));
+            UserResponse userResponse = userMapper.map(user);
+            return ResponseEntity
+                    .status(HttpStatus.OK)
+                    .body(userResponse);
+        } catch (UserNotFoundException ex) {
+            return ResponseEntity
+                    .status(HttpStatus.NOT_FOUND)
+                    .body(ex.getMessage());
+        } catch (Exception ex) {
+            return ResponseEntity
+                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .build();
+        }
+    }
+
+    public ResponseEntity<?> getUserByUsername(String username) {
+        try {
+            User user = userRepository.findByUsername(username)
+                    .orElseThrow(() -> new UserNotFoundException(username));
             UserResponse userResponse = userMapper.map(user);
             return ResponseEntity
                     .status(HttpStatus.OK)
@@ -106,10 +133,9 @@ public class UserService {
         try {
             final User user = userRepository.findById(updateResaleIdRequest.userId())
                     .orElseThrow(() -> new UserNotFoundException(updateResaleIdRequest.userId()));
-            ResaleResponse resaleResponse = restTemplate.getForObject(
-                    "http:localhost:8080/api/v1/resale-management/{resaleId}",
-                    ResaleResponse.class,
-                    updateResaleIdRequest.newResaleId()
+            ResaleResponse resaleResponse = getRequest(
+                    "http://localhost:8080/api/v1/resale-management/"+updateResaleIdRequest.newResaleId(),
+                    ResaleResponse.class
             );
             user.setResaleId(resaleResponse.resaleId());
             userRepository.save(user);
@@ -127,8 +153,65 @@ public class UserService {
         }
     }
 
+    public ResponseEntity<?> getAssignableUsers(Integer resaleId) {
+        try {
+            final List<String> usernames = userRepository.findUsersWithLeastOpportunities(resaleId)
+                    .orElseThrow(RuntimeException::new);
+            return ResponseEntity
+                    .status(HttpStatus.OK)
+                    .body(usernames);
+        } catch (Exception ex) {
+            return ResponseEntity
+                    .status(HttpStatus.BAD_REQUEST)
+                    .build();
+        }
+    }
+
+    public ResponseEntity<?> userAssigned(String username) {
+        return this.updateNumberOfOpportunities(username, +1);
+    }
+
+    public ResponseEntity<?> concludedOpportunity(String username) {
+        return this.updateNumberOfOpportunities(username, -1);
+    }
+
+    private ResponseEntity<?> updateNumberOfOpportunities(String username, int increment) {
+        try {
+            User user = userRepository.findByUsername(username)
+                    .orElseThrow(() -> new UserNotFoundException(username));
+            user.setQttOpportunitiesAttended(user.getQttOpportunitiesAttended()+increment);
+            if (increment > 0) {
+                user.setLastOpportunityReceived(LocalDateTime.now());
+            }
+            userRepository.save(user);
+            return ResponseEntity
+                    .status(HttpStatus.OK)
+                    .build();
+        } catch (UserNotFoundException ex) {
+            return ResponseEntity
+                    .status(HttpStatus.NOT_FOUND)
+                    .body(ex.getMessage());
+        } catch (Exception ex) {
+            return ResponseEntity
+                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(ex.getMessage());
+        }
+    }
+
 
     private boolean checkAuthorities(User requestUser, Integer resaleId) {
         return !requestUser.getRole().equals(Role.ADMINISTRATOR) && !requestUser.getResaleId().equals(resaleId);
+    }
+
+    private <T> T getRequest(
+            String url,
+            Class<T> responseClass
+    ) {
+        final String token = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getHeader("Authorization");
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Authorization", token);
+        HttpEntity<String> entity = new HttpEntity<>("", headers);
+        ResponseEntity<T> response = restTemplate.exchange(url, HttpMethod.GET, entity, responseClass);
+        return response.getBody();
     }
 }

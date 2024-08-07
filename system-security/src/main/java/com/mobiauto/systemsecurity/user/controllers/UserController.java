@@ -32,6 +32,22 @@ public class UserController {
         return userService.getUserById(userId);
     }
 
+    @GetMapping(
+            path = "/get/{username}",
+            produces = MediaType.APPLICATION_JSON_VALUE
+    )
+    public ResponseEntity<?> getUserByUsername(final @PathVariable("username") String username) {
+        return userService.getUserByUsername(username);
+    }
+
+    @GetMapping(
+            path = "/assignable-users/{resaleId}",
+            produces = MediaType.APPLICATION_JSON_VALUE
+    )
+    public ResponseEntity<?> getAssignableUsers(final @PathVariable("resaleId") Integer resaleId) {
+        return userService.getAssignableUsers(resaleId);
+    }
+
     @DeleteMapping(path = "/delete/{userId}")
     @PreAuthorize("hasAuthority('ADMINISTRATOR', 'OWNER')")
     public ResponseEntity<?> deleteUserById(final @PathVariable("userId") Integer userId) {
@@ -54,5 +70,15 @@ public class UserController {
     @PreAuthorize("hasAuthority('ADMINISTRATOR')")
     public ResponseEntity<?> updateResaleId(final @RequestBody UpdateResaleIdRequest updateResaleIdRequest) {
         return userService.updateResaleId(updateResaleIdRequest);
+    }
+
+    @PutMapping(path = "/assigned-for-opportunity/{username}")
+    public ResponseEntity<?> userAssigned(final @PathVariable("username") String username) {
+        return userService.userAssigned(username);
+    }
+
+    @PutMapping(path = "/concluded-opportunity/{username}")
+    public ResponseEntity<?> concludedOpportunity(final @PathVariable("username") String username) {
+        return userService.concludedOpportunity(username);
     }
 }

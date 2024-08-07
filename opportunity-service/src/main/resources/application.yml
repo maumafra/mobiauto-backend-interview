@@ -1,0 +1,15 @@
+server:
+  port: 8083
+
+spring:
+  application:
+    name: opportunity-service
+  datasource:
+    username: 'admin'
+    url: jdbc:postgresql://localhost:5432/opportunity-service
+    password: 'password'
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: 'true'
+    database-platform: org.hibernate.dialect.PostgreSQLDialect

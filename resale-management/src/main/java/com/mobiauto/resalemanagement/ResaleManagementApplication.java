@@ -5,7 +5,7 @@ import com.mobiauto.resalemanagement.business.services.ResaleManagementService;
 import com.mobiauto.resalemanagement.controllers.ResaleManagementController;
 import com.mobiauto.resalemanagement.entities.Resale;
 import com.mobiauto.resalemanagement.repositories.ResaleRepository;
-import com.mobiauto.resalemanagement.security.config.SecurityConfig;
+import com.mobiauto.resalemanagement.security.config.ResaleManagementSecurityConfig;
 import com.mobiauto.systemsecurity.config.ApplicationConfig;
 import com.mobiauto.systemsecurity.config.ConfigurationService;
 import com.mobiauto.systemsecurity.config.JwtAuthenticationFilter;
@@ -46,7 +46,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @ConfigurationPropertiesScan(
         basePackageClasses = {
                 ApplicationConfig.class,
-                SecurityConfig.class,
+                ResaleManagementSecurityConfig.class,
                 StartupConfig.class
         }
 )

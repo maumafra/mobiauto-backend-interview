@@ -6,7 +6,7 @@ import lombok.Builder;
 
 @Builder
 @JsonIgnoreProperties(ignoreUnknown = true)
-public record VehicleResponseDTO(
+public record VehicleResponse(
         @JsonProperty("vehicleCompany")
         String vehicleCompany,
         @JsonProperty("vehicleModel")

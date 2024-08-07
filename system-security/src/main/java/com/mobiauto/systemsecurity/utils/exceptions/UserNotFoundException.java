@@ -8,6 +8,10 @@ public class UserNotFoundException extends RuntimeException {
         this.message = "user not found: "+userId;
     }
 
+    public UserNotFoundException(String username) {
+        this.message = "user not found: "+username;
+    }
+
     @Override
     public String getMessage() {
         return message;

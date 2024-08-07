@@ -10,17 +10,17 @@ import org.springframework.hateoas.RepresentationModel;
 @Builder
 @Getter
 @JsonPropertyOrder({
-        "id", "status", "reasonForConclusion"
+        "id", "status", "resaleId"
 })
-public class OpportunityResponseDTO extends RepresentationModel<OpportunityResponseDTO> {
+public class OpportunityResponse extends RepresentationModel<OpportunityResponse> {
         @JsonProperty("id")
         private Integer opportunityId;
         @JsonProperty("status")
         private String status;
         @JsonUnwrapped
-        private ClientResponseDTO client;
+        private ClientResponse client;
         @JsonUnwrapped
-        private VehicleResponseDTO vehicle;
-        @JsonProperty("reasonForConclusion")
-        private String reasonForConclusion;
+        private VehicleResponse vehicle;
+        @JsonProperty("resaleId")
+        private Integer resaleId;
 }

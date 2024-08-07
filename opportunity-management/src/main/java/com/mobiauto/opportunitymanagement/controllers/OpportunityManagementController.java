@@ -1,7 +1,7 @@
 package com.mobiauto.opportunitymanagement.controllers;
 
 
-import com.mobiauto.opportunitymanagement.business.dtos.OpportunityRegistrationDTO;
+import com.mobiauto.opportunitymanagement.business.dtos.OpportunityRegistration;
 import com.mobiauto.opportunitymanagement.business.services.OpportunityManagementService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -39,8 +39,29 @@ public class OpportunityManagementController {
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE
     )
-    public ResponseEntity<?> registerOpportunity(final @RequestBody @Valid OpportunityRegistrationDTO opportunityRegistrationDTO){
-        return opportunityManagementService.registerOpportunity(opportunityRegistrationDTO);
+    public ResponseEntity<?> registerOpportunity(final @RequestBody @Valid OpportunityRegistration opportunityRegistration){
+        return opportunityManagementService.registerOpportunity(opportunityRegistration);
+    }
+
+    @PutMapping(
+            path = "/opportunity-in-service/{opportunityId}"
+    )
+    public ResponseEntity<?> opportunityInService(final @PathVariable("opportunityId") Integer opportunityId) {
+        return opportunityManagementService.opportunityInService(opportunityId);
+    }
+
+    @PutMapping(
+            path = "/opportunity-concluded/{opportunityId}"
+    )
+    public ResponseEntity<?> opportunityConcluded(final @PathVariable("opportunityId") Integer opportunityId) {
+        return opportunityManagementService.opportunityConcluded(opportunityId);
+    }
+
+    @PutMapping(
+            path = "/opportunity-new/{opportunityId}"
+    )
+    public ResponseEntity<?> opportunityNew(final @PathVariable("opportunityId") Integer opportunityId) {
+        return opportunityManagementService.opportunityNew(opportunityId);
     }
 
     @DeleteMapping(path = "/delete-opportunity/{opportunityId}")

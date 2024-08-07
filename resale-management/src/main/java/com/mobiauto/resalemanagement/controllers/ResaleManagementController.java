@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -44,11 +45,13 @@ public class ResaleManagementController {
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE
     )
+    @PreAuthorize("hasAuthority('ADMINISTRATOR')")
     public ResponseEntity<?> registerResale(final @RequestBody @Valid ResaleRequest resaleRequest) {
         return resaleManagementService.registerResale(resaleRequest);
     }
 
     @DeleteMapping(path = "/delete-resale/{resaleId}")
+    @PreAuthorize("hasAuthority('ADMINISTRATOR')")
     public ResponseEntity<?> deleteResale(final @PathVariable("resaleId") Integer resaleId) {
         return resaleManagementService.deleteResale(resaleId);
     }

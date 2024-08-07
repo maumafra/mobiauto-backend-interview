@@ -10,7 +10,7 @@ import jakarta.validation.constraints.NotBlank;
  * mas optei por não fazer, já que existem países que não seguem esse padrão.
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
-public record OpportunityRegistrationDTO(
+public record OpportunityRegistration(
 
         @JsonProperty("clientName")
         @NotBlank(message = "clientName"+Constants.BLANK_FIELD_ERROR_MESSAGE)
@@ -39,6 +39,10 @@ public record OpportunityRegistrationDTO(
 
         @JsonProperty("vehicleYear")
         @NotBlank(message = "vehicleYear"+Constants.BLANK_FIELD_ERROR_MESSAGE)
-        String vehicleYear
+        String vehicleYear,
+
+        @JsonProperty("resaleId")
+        @NotBlank(message = "resaleId"+Constants.BLANK_FIELD_ERROR_MESSAGE)
+        Integer resaleId
 ) {
 }

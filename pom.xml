@@ -16,6 +16,7 @@
     <module>resale-management</module>
     <module>opportunity-management</module>
     <module>system-security</module>
+      <module>opportunity-service</module>
   </modules>
 
   <properties>

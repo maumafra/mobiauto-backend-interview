@@ -1,8 +1,8 @@
-package com.mobiauto.resalemanagement.security.config;
+package com.mobiauto.opportunitymanagement.security.config;
 
+import com.mobiauto.systemsecurity.config.JwtAuthenticationFilter;
 import com.mobiauto.systemsecurity.user.entities.Role;
 import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -16,7 +16,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Configuration
 @EnableWebSecurity
 @NoArgsConstructor
-public class SecurityConfig {
+public class OpportunityManagementSecurityConfig {
 
     @Autowired
     private JwtAuthenticationFilter jwtAuthFilter;
@@ -29,7 +29,7 @@ public class SecurityConfig {
                 .csrf()
                 .disable()
                 .authorizeHttpRequests()
-                .requestMatchers("/api/v1/resale-management/**")
+                .requestMatchers("/api/v1/opportunity-management/**")
                 .hasAnyAuthority(
                         Role.ADMINISTRATOR.name(),
                         Role.MANAGER.name(),

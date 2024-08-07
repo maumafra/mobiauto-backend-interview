@@ -9,11 +9,12 @@ import com.mobiauto.systemsecurity.config.JwtAuthenticationFilter;
 import com.mobiauto.systemsecurity.config.JwtService;
 import com.mobiauto.systemsecurity.config.SecurityConfig;
 import com.mobiauto.systemsecurity.config.StartupConfig;
-import com.mobiauto.systemsecurity.user.UserConfig;
+import com.mobiauto.systemsecurity.user.services.config.UserConfig;
 import com.mobiauto.systemsecurity.user.controllers.UserController;
 import com.mobiauto.systemsecurity.user.entities.User;
 import com.mobiauto.systemsecurity.user.mapper.UserMapper;
 import com.mobiauto.systemsecurity.user.repositories.UserRepository;
+import com.mobiauto.systemsecurity.user.services.UserService;
 import com.mobiauto.systemsecurity.utils.helper.ContextHelper;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -33,6 +34,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
                 UserMapper.class,
                 ContextHelper.class,
                 UserController.class,
+                UserService.class,
                 JwtService.class,
                 JwtAuthenticationFilter.class,
                 ConfigurationService.class,
