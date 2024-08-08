@@ -2,11 +2,13 @@ package com.mobiauto.systemsecurity.auth.services;
 
 import com.mobiauto.systemsecurity.auth.dtos.AuthenticationResponse;
 import com.mobiauto.systemsecurity.auth.dtos.UserAuthenticationRequest;
+import com.mobiauto.systemsecurity.auth.dtos.UserDetailsResponse;
 import com.mobiauto.systemsecurity.auth.dtos.UserRegistrationRequest;
 import com.mobiauto.systemsecurity.auth.mappers.UserAuthMapper;
 import com.mobiauto.systemsecurity.config.JwtService;
 import com.mobiauto.systemsecurity.user.entities.User;
 import com.mobiauto.systemsecurity.user.repositories.UserRepository;
+import com.mobiauto.systemsecurity.utils.exceptions.UserNotFoundException;
 import com.mobiauto.systemsecurity.utils.helper.ContextHelper;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +17,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -88,5 +91,11 @@ public class AuthenticationService {
                     .status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .build();
         }
+    }
+
+    public UserDetailsResponse getUserDetails(final String username) {
+        User user =userRepository.findByUsername(username)
+                .orElseThrow(() -> new UserNotFoundException(username));
+        return userAuthMapper.map(user);
     }
 }

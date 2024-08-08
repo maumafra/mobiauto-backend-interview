@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.mobiauto.opportunitymanagement.utils.Constants;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 /* poderia colocar um @Pattern com o regex "(\\(\\d{2}\\)\\s)(\\d{4,5}\\-\\d{4})" em clientPhone,
  * mas optei por não fazer, já que existem países que não seguem esse padrão.
@@ -42,7 +43,7 @@ public record OpportunityRegistration(
         String vehicleYear,
 
         @JsonProperty("resaleId")
-        @NotBlank(message = "resaleId"+Constants.BLANK_FIELD_ERROR_MESSAGE)
+        @NotNull(message = "resaleId"+Constants.BLANK_FIELD_ERROR_MESSAGE)
         Integer resaleId
 ) {
 }

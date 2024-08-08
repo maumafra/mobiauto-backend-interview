@@ -9,6 +9,7 @@ import com.mobiauto.systemsecurity.config.JwtAuthenticationFilter;
 import com.mobiauto.systemsecurity.config.JwtService;
 import com.mobiauto.systemsecurity.config.SecurityConfig;
 import com.mobiauto.systemsecurity.config.StartupConfig;
+import com.mobiauto.systemsecurity.config.UserDetailsConfig;
 import com.mobiauto.systemsecurity.user.services.config.UserConfig;
 import com.mobiauto.systemsecurity.user.controllers.UserController;
 import com.mobiauto.systemsecurity.user.entities.User;
@@ -53,6 +54,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
                 UserConfig.class,
                 ApplicationConfig.class,
                 SecurityConfig.class,
+                UserDetailsConfig.class,
                 StartupConfig.class
         }
 )

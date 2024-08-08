@@ -48,7 +48,7 @@ public class OpportunityServiceService {
         try {
             OpportunityResponse opportunityResponse = getOpportunity(opportunityId);
             checkOpportunityStatus(opportunityResponse);
-            final Integer resaleId = opportunityResponse.resaleId();
+            final Integer resaleId = opportunityResponse.getResaleId();
             List<String> assignableUsers = getAssignableUsers(resaleId);
             String username = assignableUsers.stream().findFirst()
                     .orElseThrow(RuntimeException::new);
@@ -79,7 +79,7 @@ public class OpportunityServiceService {
     public ResponseEntity<?> registerOpportunityService(final OpportunityServiceRequest request) {
         try {
             OpportunityResponse opportunityResponse = getOpportunity(request.opportunityId());
-            checkResaleAuthorization(opportunityResponse.resaleId());
+            checkResaleAuthorization(opportunityResponse.getResaleId());
             checkOpportunityStatus(opportunityResponse);
             getUser(request.userInService());
             OpportunityServiceEntity opportunityService = opportunityServiceMapper.map(request);
@@ -144,7 +144,7 @@ public class OpportunityServiceService {
     public ResponseEntity<?> changeOpportunityServiceUser(final Integer opportunityId, final String newUser) {
         try {
             OpportunityResponse opportunityResponse = getOpportunity(opportunityId);
-            checkResaleAuthorization(opportunityResponse.resaleId());
+            checkResaleAuthorization(opportunityResponse.getResaleId());
             getUser(newUser);
             OpportunityServiceEntity opportunityService = getOpportunityServiceEntityByOpportunityId(opportunityId);
             final String oldUser = opportunityService.getUserInService();
@@ -180,7 +180,7 @@ public class OpportunityServiceService {
     ) {
         try {
             OpportunityResponse opportunityResponse = getOpportunity(opportunityId);
-            checkResaleAuthorization(opportunityResponse.resaleId());
+            checkResaleAuthorization(opportunityResponse.getResaleId());
             OpportunityServiceEntity opportunityService = getOpportunityServiceEntityByOpportunityId(opportunityId);
             opportunityService.setConclusionDate(LocalDateTime.now());
             opportunityService.setReasonForConclusion(concludeOpporunityRequest.reasonForConclusion());
@@ -212,12 +212,14 @@ public class OpportunityServiceService {
     public ResponseEntity<?> deleteOpportunityService(final Integer opportunityId) {
         try {
             OpportunityResponse opportunityResponse = getOpportunity(opportunityId);
-            checkResaleAuthorization(opportunityResponse.resaleId());
+            checkResaleAuthorization(opportunityResponse.getResaleId());
             OpportunityServiceEntity opportunityService = getOpportunityServiceEntityByOpportunityId(opportunityId);
             final String userInService = opportunityService.getUserInService();
             opportunityServiceRepository.delete(opportunityService);
-            setOpportunityNew(opportunityId);
-            userConcluded(userInService);
+            if (!opportunityResponse.getStatus().equals("CONCLUDED")) {
+                setOpportunityNew(opportunityId);
+                userConcluded(userInService);
+            }
             return ResponseEntity
                     .status(HttpStatus.OK)
                     .build();
@@ -242,8 +244,8 @@ public class OpportunityServiceService {
 
     //PRIVATE METHODS BELOW
     private void checkOpportunityStatus(final OpportunityResponse opportunityResponse) {
-        if (!("NEW").equals(opportunityResponse.status())) {
-            throw new OpportunityAlreadyAssignedException(opportunityResponse.id());
+        if (!("NEW").equals(opportunityResponse.getStatus())) {
+            throw new OpportunityAlreadyAssignedException(opportunityResponse.getId());
         }
     }
 

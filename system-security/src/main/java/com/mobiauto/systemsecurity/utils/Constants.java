@@ -10,7 +10,7 @@ public class Constants {
                     select a.username\s
                     from User a\s
                     where coalesce(a.qttOpportunitiesAttended, 0) =\s
-                    (select min(coalesce(b.qttOpportunitiesAttended,0)) from User b)
+                    (select min(coalesce(b.qttOpportunitiesAttended,0)) from User b where b.resaleId = :resaleId)
                     and a.resaleId = :resaleId\s
                     order by a.lastOpportunityReceived desc
             """;
