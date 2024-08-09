@@ -26,14 +26,14 @@ The System Security feature is responsible for authenticating users, ensuring to
 
 This system was designed to run in containers using [Docker](https://www.docker.com/get-started/).<br><br>
 For the database, PostgreSQL was used with pgAdmin4 as the administrator.<br>
-The system requires a datasource for each microservice, e.g. the resale-management microservice needs a datasource with the name resale-management.<br><br>
+Each microservice requires its own datasource, e.g. the resale-management microservice needs a datasource with the name resale-management.<br><br>
 In addition, Java 17 (Oracle OpenJDK version 17.0.7) and Maven (version 3.9.8) were used.<br>
 Spring Boot version: 3.0.1<br>
 Main libraries: Lombok, Spring Web, Spring Data JPA, Spring Security, Spring Validation, Spring HATEOAS and Spring Test.
 
 ### Architecture
-This software was made using the microservices architecture, so each microservice works as one deployable feature of the system.<br>
-Furthermore, this system follows the RESTful pattern, so each microservice provides its own endpoints with Hypermedia Controls, achieving the 3 levels of Richardson Maturity Model.<br><br>
+This software was made using the microservices architecture, so each microservice works as one deployable feature.<br>
+Furthermore, this system follows the RESTful pattern, so each microservice provides its own endpoints with Hypermedia Controls, achieving the 4 levels of Richardson Maturity Model.<br><br>
 
 
 
